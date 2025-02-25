@@ -1,7 +1,8 @@
-const express = require("express");
-const router = express.Router();
-const Recipe = require("../models/Recipe");
-const auth = require("../middleware/auth"); // Import authentication middleware
+import express from "express";
+import Recipe from "../models/Recipe.js";
+import auth from "../middleware/auth.js";
+import router from "./authRoutes.js";
+
 
 // Create Recipe (Protected Route)
 router.post("/", auth, async (req, res) => {
@@ -25,4 +26,4 @@ router.post("/", auth, async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

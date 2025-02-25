@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { registerUser } from "../api";
-import "bootstrap/dist/css/bootstrap.min.css";
+import axios from "axios";
 
 function Register() {
   const [username, setUsername] = useState("");
@@ -12,12 +11,17 @@ function Register() {
   const handleRegister = async (e) => {
     e.preventDefault();
     try {
-      const response = await registerUser(username, email, password);
+      const response = await axios.post("http://localhost:5000/api/auth/register", {
+        username,
+        email,
+        password
+      });
       if (response.data.success) {
+        alert("Registration successful!");
         navigate("/login");
       }
     } catch (error) {
-      console.error("Registration failed:", error);
+      console.error("Registration failed:", error.response?.data || error);
     }
   };
 
@@ -52,7 +56,7 @@ function Register() {
               onChange={(e) => setEmail(e.target.value)}
               required
             />
-          </div>
+            </div>
           <div className="mb-3">
             <input
               type="password"
@@ -84,7 +88,7 @@ function Register() {
           >
             Login
           </span>
-        </p>
+          </p>
       </div>
     </div>
   );

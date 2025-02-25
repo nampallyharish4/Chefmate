@@ -1,4 +1,4 @@
-const Recipe = require("../models/Recipe");
+import Recipe from "../models/Recipe.js";
 
 exports.createRecipe = async (req, res) => {
   try {

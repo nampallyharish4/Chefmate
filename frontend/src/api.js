@@ -1,29 +1,27 @@
-import axios from 'axios';
+import axios from "axios";
 
-const API = axios.create({
-  baseURL: 'http://localhost:5000/api', // replace with your backend URL
-});
+const API_URL = "http://localhost:5000"; // Backend URL
 
-export const loginUser = async (email, password) => {
-  return await API.post('/login', { email, password });
-};
-
+// User Registration API
 export const registerUser = async (username, email, password) => {
-  return await API.post('/register', { username, email, password });
+  return await axios.post(`${API_URL}/api/auth/register`, {
+    username,
+    email,
+    password,
+  });
 };
 
-export const getRecipes = async () => {
-  return await API.get('/recipes');
+// User Login API
+export const loginUser = async (email, password) => {
+  return await axios.post(`${API_URL}/api/auth/login`, {
+    email,
+    password,
+  });
 };
 
-export const getUserProfile = async () => {
-  return await API.get('/user-profile');
-};
-
-export const addFavorite = async (recipeId) => {
-  return await API.post('/favorite', { recipeId });
-};
-
-export const removeFavorite = async (recipeId) => {
-  return await API.delete(`/favorite/${recipeId}`);
+// Fetch User Profile
+export const getUserProfile = async (token) => {
+  return await axios.get(`${API_URL}/api/user/profile`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
 };
